@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   env: {
-    baseURL: 'https://headora.ocodecommerce.com',
+   baseURL: 'http://34.100.205.229:8055',  
   },
 
   output: 'export',

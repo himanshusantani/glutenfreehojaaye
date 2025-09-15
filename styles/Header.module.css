@@ -1,0 +1,215 @@
+/* Header Background and Layout */
+.header {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  font-family: 'Poppins', 'Roboto', sans-serif;
+}
+
+/* Top Header - logo, nav menu, icons */
+.topHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 38px 18px 38px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Logo Styles */
+.logoSection {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+}
+
+.logoBold {
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -2px;
+}
+
+.logoScript {
+  font-family: 'Georgia', cursive;
+  font-style: italic;
+  font-size: 1.5rem;
+  margin-left: 4px;
+  transform: translateY(4px);
+}
+
+/* Navigation Menu Links */
+.navMenu {
+  display: flex;
+  gap: 20px;
+  margin: 0 20px;
+}
+
+.navMenu a {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.navMenu a:hover {
+  color: #000;
+}
+
+/* Icons Section */
+.iconSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #222;
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: stroke 0.2s;
+}
+
+.icon:hover svg {
+  stroke: #000;
+}
+
+/* Bottom Category Navigation */
+.bottomNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  font-size: 16px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.bottomNav a {
+  color: #646464;
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  position: relative;
+  padding: 0 10px;
+  transition: color 0.18s;
+}
+
+/* Link separators except the last element */
+.bottomNav a:not(:last-child)::after {
+  content: '|';
+  position: absolute;
+  right: -15px;
+  top: 0;
+  color: #dedede;
+  font-size: 1.05em;
+}
+
+/* Hover effect for category links */
+.bottomNav a:hover {
+  color: #000000;
+}
+
+.locationSection {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-left: 28px;
+}
+
+.locationIcon {
+  display: block;
+}
+
+.locationSelect {
+  border: 1px solid #dedede;
+  background: #fafafa;
+  color: #646464;
+  font-size: 1rem;
+  padding: 5px 14px 5px 9px;
+  border-radius: 5px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border 0.18s;
+  display: flex;
+  gap: 5px;
+}
+
+.locationSelect:focus,
+.locationSelect:hover {
+  border-color: #646464;
+}
+.searchBar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  max-width: 520px;
+  background: #f8f8f8;
+  border-radius: 5px;
+  padding: 0 16px;
+  position: relative;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: #454545;
+  width: 100%;
+  outline: none;
+  padding: 9px 0;
+  font-family: inherit;
+  z-index: 2;
+}
+
+.placeholder {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: 100%;
+  pointer-events: none;
+  color: #aaa;
+  font-size: 1.08rem;
+  padding: 9px 0;
+  font-family: inherit;
+  transition: opacity 2s, transform 0.6s;
+  opacity: 1;
+  z-index: 1;
+  backface-visibility: hidden;
+  /* Vertical center, adjust as needed for perfect alignment */
+}
+
+.flip {
+  animation: flipY 1.5s forwards;
+}
+
+@keyframes flipY {
+  0% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+  49% {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+  51% {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+}
