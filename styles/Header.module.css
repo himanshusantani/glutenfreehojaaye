@@ -3,7 +3,7 @@
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  font-family: 'Poppins', 'Roboto', sans-serif;
+      /* position: fixed; */
 }
 
 /* Top Header - logo, nav menu, icons */
@@ -95,18 +95,8 @@
   font-weight: 400;
   letter-spacing: 0.3px;
   position: relative;
-  padding: 0 10px;
   transition: color 0.18s;
-}
-
-/* Link separators except the last element */
-.bottomNav a:not(:last-child)::after {
-  content: '|';
-  position: absolute;
-  right: -15px;
-  top: 0;
-  color: #dedede;
-  font-size: 1.05em;
+  padding: 12px 10px;
 }
 
 /* Hover effect for category links */
@@ -212,4 +202,45 @@
     opacity: 1;
     transform: rotateX(0deg);
   }
+}
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.parentLink {
+  color: #646464;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+}
+
+.dropdownMenu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+  z-index: 999;
+  flex-direction: column;
+}
+
+.dropdownMenu a {
+  padding: 10px 15px;
+  display: block;
+  color: #444;
+  font-size: 14px;
+}
+
+.dropdownMenu a:hover {
+  background: #f8f8f8;
+  color: #000;
+}
+
+.dropdown:hover .dropdownMenu {
+  display: flex;
 }
