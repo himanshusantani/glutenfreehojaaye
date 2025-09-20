@@ -190,11 +190,11 @@ function ProductSlider({
                                     <div className={styles.productCard}>
                                         {/* Top Badges */}
                                         <div className={styles.badgeContainer}>
-                                            {/* {discount > 0 && (
+                                            {discount > 0 && (
                                                 <div className={styles.discountBadge}>
                                                     {discount}% OFF
                                                 </div>
-                                            )} */}
+                                            )}
                                             {badges.map((badge, index) => (
                                                 <div
                                                     key={index}
