@@ -3,7 +3,9 @@
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-      /* position: fixed; */
+  position: sticky;
+  top: 0;
+  z-index: 40;
 }
 
 /* Top Header - logo, nav menu, icons */
@@ -24,12 +26,12 @@
 
 .logoBold {
   font-weight: 700;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   letter-spacing: -2px;
 }
 
 .logoScript {
-  font-family: 'Georgia', cursive;
+  font-family: "Georgia", cursive;
   font-style: italic;
   font-size: 1.5rem;
   margin-left: 4px;
@@ -67,7 +69,7 @@
   width: 24px;
   height: 24px;
   fill: none;
-  stroke: #222;
+  stroke: #6b7280;
   stroke-width: 1.5;
   cursor: pointer;
   transition: stroke 0.2s;
@@ -75,6 +77,13 @@
 
 .icon:hover svg {
   stroke: #000;
+}
+
+/* Desktop-only class for icons */
+.desktopIcons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 /* Bottom Category Navigation */
@@ -90,7 +99,7 @@
 }
 
 .bottomNav a {
-  color: #646464;
+  color: #6b7280;
   text-decoration: none;
   font-weight: 400;
   letter-spacing: 0.3px;
@@ -134,6 +143,7 @@
 .locationSelect:hover {
   border-color: #646464;
 }
+
 .searchBar {
   display: flex;
   align-items: center;
@@ -178,7 +188,6 @@
   opacity: 1;
   z-index: 1;
   backface-visibility: hidden;
-  /* Vertical center, adjust as needed for perfect alignment */
 }
 
 .flip {
@@ -203,6 +212,7 @@
     transform: rotateX(0deg);
   }
 }
+
 /* Dropdown Styles */
 .dropdown {
   position: relative;
@@ -224,7 +234,7 @@
   background: #fff;
   border: 1px solid #eee;
   border-radius: 4px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
   z-index: 999;
   flex-direction: column;
 }
@@ -243,4 +253,258 @@
 
 .dropdown:hover .dropdownMenu {
   display: flex;
+}
+
+/* Mobile hamburger menu button - hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  gap: 4px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #646464;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Mobile overlay */
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  display: none;
+}
+
+/* Mobile side menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100%;
+  background: #fff;
+  z-index: 999;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobileMenuOpen {
+  right: 0;
+}
+
+.mobileMenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobileMenuHeader h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobileMenuContent {
+  padding: 20px;
+}
+
+.mobileLocationSection {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobileNavSection {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobileNavSection h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.mobileNavSection a {
+  display: block;
+  padding: 12px 0;
+  color: #646464;
+  text-decoration: none;
+  font-size: 16px;
+  border-bottom: 1px solid #f5f5f5;
+  transition: color 0.2s;
+}
+
+.mobileNavSection a:hover {
+  color: #000;
+}
+
+.mobileCategoriesSection {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobileCategoriesSection h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.mobileCategory {
+  margin-bottom: 15px;
+}
+
+.mobileCategoryLink {
+  display: block;
+  padding: 12px 0;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.mobileSubCategories {
+  padding-left: 15px;
+  margin-top: 5px;
+}
+
+.mobileSubLink {
+  display: block;
+  padding: 8px 0;
+  color: #646464;
+  text-decoration: none;
+  font-size: 14px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.mobileSubLink:hover {
+  color: #000;
+}
+
+.mobileIconsSection h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.mobileIconsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.mobileIconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobileIconItem:hover {
+  background: #f8f8f8;
+}
+
+.mobileIconItem span {
+  font-size: 12px;
+  color: #646464;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .topHeader {
+    padding: 15px 20px;
+  }
+
+  .logoSection {
+    font-size: 1.8rem;
+  }
+
+  .locationSection {
+    display: none;
+  }
+
+  .navMenu {
+    display: none;
+  }
+
+  .desktopIcons {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .searchBar {
+    max-width: 200px;
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  .searchInput {
+    font-size: 14px;
+  }
+
+  .placeholder {
+    font-size: 14px;
+  }
+
+  .bottomNav {
+    display: none;
+  }
+
+  .mobileOverlay {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .topHeader {
+    padding: 12px 15px;
+  }
+
+  .logoSection {
+    font-size: 1.5rem;
+  }
+
+  .searchBar {
+    max-width: 150px;
+    height: 36px;
+  }
+
+  .mobileMenu {
+    width: 280px;
+  }
 }

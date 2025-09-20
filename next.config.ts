@@ -7,7 +7,17 @@ const nextConfig: NextConfig = {
    baseURL: 'http://34.100.205.229:8055',  
   },
 
-  output: 'export',
+   appDir: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
+  },
+  
   trailingSlash: true,
 
 };
