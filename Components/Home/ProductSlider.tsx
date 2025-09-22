@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCards } from 'swiper/modules';
+import { Navigation, Pagination, EffectCards, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -19,19 +19,21 @@ interface Product {
     sku: string;
 }
 
-interface ProductSliderProps {
-    allSliderProducts: Product[];
-    title?: string;
-    subtitle?: string;
-    icon?: string;
-}
+
 
 function ProductSlider({
     allSliderProducts,
-
-}: ProductSliderProps) {
+    categoryLink,
+    sliderTitle,
+    sliderSubTitle}: any) {
     const [wishlist, setWishlist] = useState<string[]>([]);
     const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
+    
+    // States for navigation button visibility
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
+    
+    const swiperRef = useRef<any>(null);
 
     console.log(allSliderProducts, 'allSliderProducts');
 
@@ -50,43 +52,42 @@ function ProductSlider({
     const getProductBadges = (product: Product) => {
         const badges = [];
 
-        // Define badge mappings with icons
         const badgeMap: any = {
-            'lactose_free': { type: 'dietary', label: '🥛 Lactose-Free' },
-            'vegan': { type: 'dietary', label: '🌱 Vegan' },
-            'gluten_free': { type: 'dietary', label: '🌾 Gluten-Free' },
-            'made_with_millets': { type: 'ingredient', label: '🌾 Made with Millets' },
-            'keto_friendly': { type: 'diet', label: '🥑 Keto-Friendly' },
-            'diabetic_friendly': { type: 'health', label: '⚡ Diabetic-Friendly' },
-            'pcos_friendly': { type: 'health', label: '💚 PCOS-Friendly' },
-            'no_preservatives': { type: 'clean', label: '🚫 No Preservatives' },
-            'no_refined_flour': { type: 'clean', label: '🌾 No Refined Flour' },
-            'plant_based': { type: 'dietary', label: '🌿 Plant-Based' },
-            'high_protein': { type: 'nutrition', label: '💪 High Protein' },
-            'high_fiber': { type: 'nutrition', label: '🌾 High Fiber' },
-            'low_carb': { type: 'nutrition', label: '⬇️ Low Carb' },
-            'low_gi': { type: 'health', label: '📈 Low GI' },
-            'soy_free': { type: 'allergen', label: '🚫 Soy-Free' },
-            'nut_free': { type: 'allergen', label: '🥜 Nut-Free' },
-            'dairy_free': { type: 'allergen', label: '🚫 Dairy-Free' },
-            'egg_free': { type: 'allergen', label: '🥚 Egg-Free' },
-            'no_artificial_colors': { type: 'clean', label: '🎨 No Artificial Colors' },
-            'no_artificial_flavors': { type: 'clean', label: '🧪 No Artificial Flavors' },
-            'non_gmo': { type: 'quality', label: '🧬 Non-GMO' },
-            'organic_ingredients': { type: 'quality', label: '🌿 Organic' },
-            'whole_grain': { type: 'ingredient', label: '🌾 Whole Grain' },
-            'heart_healthy': { type: 'health', label: '❤️ Heart-Healthy' },
-            'cholesterol_free': { type: 'health', label: '💚 Cholesterol-Free' },
-            'trans_fat_free': { type: 'health', label: '🚫 Trans-Fat-Free' },
-            'zero_palm_oil': { type: 'environmental', label: '🌴 Zero Palm Oil' },
-            'sustainable_ingredients': { type: 'environmental', label: '♻️ Sustainable' },
-            'clean_label': { type: 'quality', label: '✨ Clean Label' },
-            'all_natural': { type: 'quality', label: '🌿 All Natural' }
+            'lactose_free': { type: 'dietary', iconURL: '/Icons/ColoredIcon/lactose-free.png' , label: 'Lactose-Free' },
+            'vegan': { type: 'dietary', iconURL: '/Icons/ColoredIcon/vegan.png' , label: 'Vegan' },
+            'gluten_free': { type: 'dietary', iconURL: '/Icons/ColoredIcon/gluten-free.png', label: 'Gluten-Free' },
+            'made_with_millets': { type: 'ingredient', iconURL: '/Icons/ColoredIcon/millet.png' , label: 'Made with Millets' },
+            'keto_friendly': { type: 'diet', iconURL: '/Icons/ColoredIcon/keto.png' , label: 'Keto-Friendly' },
+            'diabetic_friendly': { type: 'health', iconURL: '/Icons/ColoredIcon/sugar-free.png', label: 'Diabetic-Friendly' },
+            'pcos_friendly': { type: 'health', iconURL: '/Icons/ColoredIcon/PCSO.png' , label: 'PCOS-Friendly' },
+            'no_preservatives': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-preservatives.png' , label: 'No Preservatives' },
+            'no_refined_flour': { type: 'clean', iconURL: '/Icons/ColoredIcon/refind-flour.png' , label: 'No Refined Flour' },
+            'plant_based': { type: 'dietary', iconURL: '/Icons/ColoredIcon/Plant-Based.png', label: 'Plant-Based' },
+            'high_protein': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/high-protein.png' , label: 'High Protein' },
+            'high_fiber': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/high-fiber.png' , label: 'High Fiber' },
+            'low_carb': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/low-crab.png', label: 'Low Carb' },
+            'low_gi': { type: 'health', iconURL: '/Icons/ColoredIcon/glycemic-index.png' , label: 'Low GI' },
+            'soy_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/Soy Free.png' , label: 'Soy-Free' },
+            'nut_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/nut.png' , label: 'Nut-Free' },
+            'dairy_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/dairy-free.png' , label: 'Dairy-Free' },
+            'egg_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/no-egg.png', label: 'Egg-Free' },
+            'no_artificial_colors': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-artificial-colours.png' , label: 'No Artificial Colors' },
+            'no_artificial_flavors': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-artificial-flavors.png' , label: 'No Artificial Flavors' },
+            'non_gmo': { type: 'quality', iconURL: '/Icons/ColoredIcon/GMO.png', label: 'Non-GMO' },
+            'organic_ingredients': { type: 'quality', iconURL: '/Icons/ColoredIcon/organic.png', label: 'Organic' },
+            'whole_grain': { type: 'ingredient', iconURL: '/Icons/ColoredIcon/whole-wheat.png', label: 'Whole Grain' },
+            'heart_healthy': { type: 'health', iconURL: '/Icons/ColoredIcon/heart-friendly.png' , label: 'Heart-Healthy' },
+            'cholesterol_free': { type: 'health', iconURL: '/Icons/ColoredIcon/no-cholesterol.png' , label: 'Cholesterol-Free' },
+            'trans_fat_free': { type: 'health', iconURL: '/Icons/ColoredIcon/trans-fat.png' , label: 'Trans-Fat-Free' },
+            'zero_palm_oil': { type: 'environmental', iconURL: '/Icons/ColoredIcon/palm-oil-free.png', label: 'Zero Palm Oil' },
+            'sustainable_ingredients': { type: 'environmental', iconURL: '/Icons/ColoredIcon/sustainability.png' , label: 'Sustainable' },
+            'clean_label': { type: 'quality', iconURL: '/Icons/ColoredIcon/clean.png' , label: 'Clean Label' },
+            'all_natural': { type: 'quality', iconURL: '/Icons/ColoredIcon/all-organic.png' , label: 'All Natural' },
         };
 
         // Add badges based on product attributes (limit to 3-4 most important ones)
         let badgeCount = 0;
-        const maxBadges = 3;
+        const maxBadges = 5;
 
         // Priority order for displaying badges
         const priorityOrder = [
@@ -116,13 +117,9 @@ function ProductSlider({
             }
         }
 
-        // Add stock badge if high quantity and space available
-        // if (badgeCount < maxBadges && product.quantity > 50) {
-        //   badges.push({ type: 'stock', label: '✅ In Stock' });
-        // }
-
         return badges;
     };
+    
     const toggleWishlist = (productId: string) => {
         setWishlist(prev =>
             prev.includes(productId)
@@ -136,6 +133,25 @@ function ProductSlider({
             ...prev,
             [productId]: Math.max(0, (prev[productId] || 0) + change)
         }));
+    };
+
+    // Handle swiper events
+    const handleSlideChange = (swiper: any) => {
+        setIsBeginning(swiper.isBeginning);
+        setIsEnd(swiper.isEnd);
+    };
+
+    // Navigation handlers
+    const handlePrevClick = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slidePrev();
+        }
+    };
+
+    const handleNextClick = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slideNext();
+        }
     };
 
     // Handle empty or invalid data
@@ -152,16 +168,45 @@ function ProductSlider({
     return (
         <>
             <div className={styles.productSliderContainer}>
+                
+                {/* Header */}
+                <div className={styles.sliderHeader}>
+                    <div className={styles.headerContent}>
+                        <h2 className={styles.sliderTitle}>
+                            {sliderTitle}
+                        </h2>
+                        <p className={styles.sliderSubtitle}>{sliderSubTitle}</p>
+                    </div>
+                </div>
+
                 {/* Swiper Slider */}
                 <div className={styles.swiperWrapper}>
                     <Swiper
-                        modules={[Navigation, Pagination]}
+                        modules={[Navigation, Pagination, Mousewheel]}
                         spaceBetween={16}
                         slidesPerView={1.2}
-                        navigation={{
-                            nextEl: '.swiper-button-next-custom',
-                            prevEl: '.swiper-button-prev-custom',
+                        simulateTouch={true}
+                        allowTouchMove={true}
+                        touchRatio={1}
+                        touchAngle={45}
+                        threshold={5}
+                        longSwipesRatio={0.5}
+                        longSwipesMs={300}
+                        followFinger={true}
+                        grabCursor={true}
+                        mousewheel={{
+                            forceToAxis: true,
+                            sensitivity: 1,
+                            releaseOnEdges: true,
                         }}
+                        freeMode={false}
+                        navigation={false} // Disable default navigation to use custom handlers
+                        onSwiper={(swiper) => {
+                            swiperRef.current = swiper;
+                            setIsBeginning(swiper.isBeginning);
+                            setIsEnd(swiper.isEnd);
+                        }}
+                        onSlideChange={handleSlideChange}
                         breakpoints={{
                             640: {
                                 slidesPerView: 2.5,
@@ -181,34 +226,19 @@ function ProductSlider({
                         }}
                         className={styles.productSwiper}
                     >
-                        {allSliderProducts.map((product:any) => {
+                        {allSliderProducts.map((product: any) => {
                             const discount = getDiscountPercentage(product.regular_price || 0, product.final_price);
                             const badges = getProductBadges(product);
 
                             return (
                                 <SwiperSlide key={product.id}>
                                     <div className={styles.productCard}>
-                                        {/* Top Badges */}
-                                        <div className={styles.badgeContainer}>
-                                            {discount > 0 && (
-                                                <div className={styles.discountBadge}>
-                                                    {discount}% OFF
-                                                </div>
-                                            )}
-                                            {badges.map((badge, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={
-                                                        badge.type === 'organic'
-                                                            ? styles.organicBadge
-                                                            : styles.specialBadge
-                                                    }
-                                                >
-                                                    {badge.label}
-                                                </div>
-                                            ))}
-                                        </div>
 
+                                        {discount > 0 && (
+                                            <div className={styles.discountBadge}>
+                                                {discount}% OFF
+                                            </div>
+                                        )}
                                         {/* Wishlist Button */}
                                         <button
                                             className={`${styles.wishlistBtn} ${wishlist.includes(product.id) ? styles.wishlistActive : ''}`}
@@ -250,19 +280,23 @@ function ProductSlider({
                                                     : product.title
                                                 }
                                             </h3>
-                                            {/* <p className={styles.productVolume}>
-                        {product.brand} • SKU: {product.sku}
-                      </p>
-                       */}
                                             <p className={styles.productVolume}>{product?.product_weight}</p>
-                                            {/* Stock Status */}
-                                            {/* <div className={styles.stockStatus}>
-                        {product.quantity > 0 ? (
-                          <span className={styles.inStock}>✓ In Stock ({product.quantity})</span>
-                        ) : (
-                          <span className={styles.outOfStock}>✗ Out of Stock</span>
-                        )}
-                      </div> */}
+
+                                            {/* Top Badges */}
+                                            <div className={styles.badgeContainer}>
+                                                {badges.map((badge, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className={
+                                                            badge.type === 'organic'
+                                                                ? styles.organicBadge
+                                                                : styles.specialBadge
+                                                        }
+                                                    >
+                                                        <img src={badge?.iconURL} alt={badge?.type} title={badge?.label}/>
+                                                    </div>
+                                                ))}
+                                            </div>
 
                                             {/* Price and Add Button */}
                                             <div className={styles.productFooter}>
@@ -318,22 +352,35 @@ function ProductSlider({
                     </Swiper>
 
                     {/* Custom Navigation Buttons */}
-                    <div className="swiper-button-prev-custom">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </div>
-                    <div className="swiper-button-next-custom">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </div>
+                    {!isBeginning && (
+                        <div className="swiper-button-prev-custom" onClick={handlePrevClick}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                    )}
+                    
+                    {!isEnd ? (
+                        <div className="swiper-button-next-custom" onClick={handleNextClick}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                    ) : (
+                        <a href={categoryLink} className="see-all-link">
+                            <span>See All</span>
+                            {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg> */}
+                        </a>
+                    )}
                 </div>
             </div>
 
-            <style jsx>{`
+              <style jsx>{`
         .swiper-button-prev-custom,
-        .swiper-button-next-custom {
+        .swiper-button-next-custom,
+        .see-all-link {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
@@ -350,6 +397,21 @@ function ProductSlider({
           color: #6b7280;
           transition: all 0.2s ease;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+        }
+
+        .see-all-link {
+          width: auto;
+          padding: 0 16px;
+          border-radius: 20px;
+          font-size: 14px;
+          font-weight: 500;
+          gap: 8px;
+          white-space: nowrap;
+           background: white;
+          border: 1px solid #e5e7eb;
+          color: #6b7280;
+          border: none;
         }
 
         .swiper-button-prev-custom:hover,
@@ -359,17 +421,26 @@ function ProductSlider({
           border-color: #d1d5db;
         }
 
+        .see-all-link:hover {
+   background: #f9fafb;
+          color: #374151;
+          border-color: #d1d5db;
+              text-decoration: underline;
+        }
+
         .swiper-button-prev-custom {
           left: 20px;
         }
 
-        .swiper-button-next-custom {
+        .swiper-button-next-custom,
+        .see-all-link {
           right: 20px;
         }
 
         @media (max-width: 1024px) {
           .swiper-button-prev-custom,
-          .swiper-button-next-custom {
+          .swiper-button-next-custom,
+          .see-all-link {
             display: none;
           }
         }

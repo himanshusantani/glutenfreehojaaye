@@ -16,8 +16,28 @@ export default function Home({ heroSlides, allSliderProducts }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <div className="freeSpace"></div> */}
-      <HeroSlider slides={heroSlides}  />
-      <ProductSlider allSliderProducts={allSliderProducts}/>
+      <HeroSlider slides={heroSlides} />
+      <ProductSlider
+        allSliderProducts={allSliderProducts}
+        categoryLink="/category"
+        sliderTitle="Cold Drinks & Juices Fresh "
+        sliderSubTitle="Stay refreshed with our premium collection." />
+     <ProductSlider
+        allSliderProducts={allSliderProducts}
+        categoryLink="/category"
+        sliderTitle="Cold Drinks & Juices Fresh "
+        sliderSubTitle="Stay refreshed with our premium collection." />
+     <ProductSlider
+        allSliderProducts={allSliderProducts}
+        categoryLink="/category"
+        sliderTitle="Cold Drinks & Juices Fresh "
+        sliderSubTitle="Stay refreshed with our premium collection." />
+     <ProductSlider
+        allSliderProducts={allSliderProducts}
+        categoryLink="/category"
+        sliderTitle="Cold Drinks & Juices Fresh "
+        sliderSubTitle="Stay refreshed with our premium collection." />
+
     </>
   );
 }
