@@ -35,8 +35,6 @@ function ProductSlider({
     
     const swiperRef = useRef<any>(null);
 
-    console.log(allSliderProducts, 'allSliderProducts');
-
     // Helper function to calculate discount percentage
     const getDiscountPercentage = (regular: number, final: number) => {
         if (!regular || regular <= final) return 0;
