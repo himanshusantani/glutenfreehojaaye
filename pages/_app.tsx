@@ -9,7 +9,7 @@ function App({ Component, pageProps, categoriesList }: any) {
   return (
     <>
     <Header categoriesList={categoriesList} />
-      <Component {...pageProps} />
+      <Component categoriesList={categoriesList} {...pageProps} />
     <Footer />
     </>
   )

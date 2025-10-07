@@ -44,9 +44,10 @@ function Header({ categoriesList }: any) {
                 {/* Top Header */}
                 <div className={style.topHeader}>
                     <div className={style.logoSection}>
-                        <span className={style.logoBold}>Organic</span>
-                        <span className={style.logoScript}>Farms</span>
-
+                        <Link href='/'>
+                            <span className={style.logoBold}>Organic</span>
+                            <span className={style.logoScript}>Farms</span>
+                        </Link>
                         {/* Location Selector - Hidden on mobile */}
                         <div className={style.locationSection}>
                             <div className={style.locationSelect}>

@@ -5,7 +5,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import styles from "../../styles/ProductsSlider.module.css";
-
+import attributeMap from "../../Components/AttributeIcons/AttributeIcons"
+import Link from 'next/link';
 interface Product {
     id: string;
     title: string;
@@ -25,14 +26,14 @@ function ProductSlider({
     allSliderProducts,
     categoryLink,
     sliderTitle,
-    sliderSubTitle}: any) {
+    sliderSubTitle }: any) {
     const [wishlist, setWishlist] = useState<string[]>([]);
     const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
-    
+
     // States for navigation button visibility
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
-    
+
     const swiperRef = useRef<any>(null);
 
     // Helper function to calculate discount percentage
@@ -50,38 +51,7 @@ function ProductSlider({
     const getProductBadges = (product: Product) => {
         const badges = [];
 
-        const badgeMap: any = {
-            'lactose_free': { type: 'dietary', iconURL: '/Icons/ColoredIcon/lactose-free.png' , label: 'Lactose-Free' },
-            'vegan': { type: 'dietary', iconURL: '/Icons/ColoredIcon/vegan.png' , label: 'Vegan' },
-            'gluten_free': { type: 'dietary', iconURL: '/Icons/ColoredIcon/gluten-free.png', label: 'Gluten-Free' },
-            'made_with_millets': { type: 'ingredient', iconURL: '/Icons/ColoredIcon/millet.png' , label: 'Made with Millets' },
-            'keto_friendly': { type: 'diet', iconURL: '/Icons/ColoredIcon/keto.png' , label: 'Keto-Friendly' },
-            'diabetic_friendly': { type: 'health', iconURL: '/Icons/ColoredIcon/sugar-free.png', label: 'Diabetic-Friendly' },
-            'pcos_friendly': { type: 'health', iconURL: '/Icons/ColoredIcon/PCSO.png' , label: 'PCOS-Friendly' },
-            'no_preservatives': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-preservatives.png' , label: 'No Preservatives' },
-            'no_refined_flour': { type: 'clean', iconURL: '/Icons/ColoredIcon/refind-flour.png' , label: 'No Refined Flour' },
-            'plant_based': { type: 'dietary', iconURL: '/Icons/ColoredIcon/Plant-Based.png', label: 'Plant-Based' },
-            'high_protein': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/high-protein.png' , label: 'High Protein' },
-            'high_fiber': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/high-fiber.png' , label: 'High Fiber' },
-            'low_carb': { type: 'nutrition', iconURL: '/Icons/ColoredIcon/low-crab.png', label: 'Low Carb' },
-            'low_gi': { type: 'health', iconURL: '/Icons/ColoredIcon/glycemic-index.png' , label: 'Low GI' },
-            'soy_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/Soy Free.png' , label: 'Soy-Free' },
-            'nut_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/nut.png' , label: 'Nut-Free' },
-            'dairy_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/dairy-free.png' , label: 'Dairy-Free' },
-            'egg_free': { type: 'allergen', iconURL: '/Icons/ColoredIcon/no-egg.png', label: 'Egg-Free' },
-            'no_artificial_colors': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-artificial-colours.png' , label: 'No Artificial Colors' },
-            'no_artificial_flavors': { type: 'clean', iconURL: '/Icons/ColoredIcon/no-artificial-flavors.png' , label: 'No Artificial Flavors' },
-            'non_gmo': { type: 'quality', iconURL: '/Icons/ColoredIcon/GMO.png', label: 'Non-GMO' },
-            'organic_ingredients': { type: 'quality', iconURL: '/Icons/ColoredIcon/organic.png', label: 'Organic' },
-            'whole_grain': { type: 'ingredient', iconURL: '/Icons/ColoredIcon/whole-wheat.png', label: 'Whole Grain' },
-            'heart_healthy': { type: 'health', iconURL: '/Icons/ColoredIcon/heart-friendly.png' , label: 'Heart-Healthy' },
-            'cholesterol_free': { type: 'health', iconURL: '/Icons/ColoredIcon/no-cholesterol.png' , label: 'Cholesterol-Free' },
-            'trans_fat_free': { type: 'health', iconURL: '/Icons/ColoredIcon/trans-fat.png' , label: 'Trans-Fat-Free' },
-            'zero_palm_oil': { type: 'environmental', iconURL: '/Icons/ColoredIcon/palm-oil-free.png', label: 'Zero Palm Oil' },
-            'sustainable_ingredients': { type: 'environmental', iconURL: '/Icons/ColoredIcon/sustainability.png' , label: 'Sustainable' },
-            'clean_label': { type: 'quality', iconURL: '/Icons/ColoredIcon/clean.png' , label: 'Clean Label' },
-            'all_natural': { type: 'quality', iconURL: '/Icons/ColoredIcon/all-organic.png' , label: 'All Natural' },
-        };
+
 
         // Add badges based on product attributes (limit to 3-4 most important ones)
         let badgeCount = 0;
@@ -97,8 +67,8 @@ function ProductSlider({
         for (const attribute of priorityOrder) {
             if (badgeCount >= maxBadges) break;
 
-            if (hasAttribute(product, attribute) && badgeMap[attribute]) {
-                badges.push(badgeMap[attribute]);
+            if (hasAttribute(product, attribute) && attributeMap[attribute]) {
+                badges.push(attributeMap[attribute]);
                 badgeCount++;
             }
         }
@@ -108,8 +78,8 @@ function ProductSlider({
             for (const attribute of product.product_attributes) {
                 if (badgeCount >= maxBadges) break;
 
-                if (!priorityOrder.includes(attribute) && badgeMap[attribute]) {
-                    badges.push(badgeMap[attribute]);
+                if (!priorityOrder.includes(attribute) && attributeMap[attribute]) {
+                    badges.push(attributeMap[attribute]);
                     badgeCount++;
                 }
             }
@@ -117,7 +87,7 @@ function ProductSlider({
 
         return badges;
     };
-    
+
     const toggleWishlist = (productId: string) => {
         setWishlist(prev =>
             prev.includes(productId)
@@ -155,25 +125,21 @@ function ProductSlider({
     // Handle empty or invalid data
     if (!allSliderProducts || allSliderProducts.length === 0) {
         return (
-            <div className={styles.productSliderContainer}>
-                <div className={styles.emptyState}>
-                    <p>No products available</p>
-                </div>
-            </div>
+       null
         );
     }
 
     return (
         <>
             <div className={styles.productSliderContainer}>
-                
+
                 {/* Header */}
                 <div className={styles.sliderHeader}>
                     <div className={styles.headerContent}>
-                        <h2 className={styles.sliderTitle}>
+                        <h3 className={styles.sliderTitle}>
                             {sliderTitle}
-                        </h2>
-                        <p className={styles.sliderSubtitle}>{sliderSubTitle}</p>
+                        </h3>
+                        {sliderSubTitle.length > 0 ? ( <p className={styles.sliderSubtitle}>{sliderSubTitle}</p>) : (null)}
                     </div>
                 </div>
 
@@ -227,9 +193,10 @@ function ProductSlider({
                         {allSliderProducts.map((product: any) => {
                             const discount = getDiscountPercentage(product.regular_price || 0, product.final_price);
                             const badges = getProductBadges(product);
-
+                            const productURL = `/product/${product?.slug}`
                             return (
-                                <SwiperSlide key={product.id}>
+                                <SwiperSlide key={product?.id}>
+
                                     <div className={styles.productCard}>
 
                                         {discount > 0 && (
@@ -239,73 +206,79 @@ function ProductSlider({
                                         )}
                                         {/* Wishlist Button */}
                                         <button
-                                            className={`${styles.wishlistBtn} ${wishlist.includes(product.id) ? styles.wishlistActive : ''}`}
-                                            onClick={() => toggleWishlist(product.id)}
+                                            className={`${styles.wishlistBtn} ${wishlist.includes(product?.id) ? styles.wishlistActive : ''}`}
+                                            onClick={() => toggleWishlist(product?.id)}
                                         >
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill={wishlist.includes(product.id) ? "currentColor" : "none"} stroke="currentColor">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill={wishlist.includes(product?.id) ? "currentColor" : "none"} stroke="currentColor">
                                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                                             </svg>
                                         </button>
 
                                         {/* Stock Badge */}
-                                        {product.quantity <= 10 && product.quantity > 0 && (
+                                        {product?.quantity <= 10 && product?.quantity > 0 && (
                                             <div className={styles.stockBadge}>
-                                                Only {product.quantity} left!
+                                                Only {product?.quantity} left!
                                             </div>
                                         )}
 
+
                                         {/* Product Image */}
-                                        <div className={styles.productImageContainer}>
-                                            <div className={styles.imageWrapper}>
-                                                <img
-                                                    src={`${process.env.baseURL}/assets/${product.thumbnail}`}
-                                                    alt={product.title}
-                                                    className={styles.productImage}
-                                                //   onError={(e) => {
-                                                //     // Fallback image if thumbnail fails to load
-                                                //     (e.target as HTMLImageElement).src = "/Images/HeroImage.png";
-                                                //   }}
-                                                />
-                                                <div className={styles.imageGlow}></div>
-                                            </div>
-                                        </div>
+                                        <Link href={productURL} className={styles.productImageContainer}>
+                                           
+                                                <div className={styles.imageWrapper}>
+                                                    <img
+                                                        src={`${process.env.baseURL}/assets/${product?.thumbnail}`}
+                                                        alt={product?.title}
+                                                        className={styles?.productImage}
+
+                                                    />
+                                                    <div className={styles?.imageGlow}></div>
+                                                </div>
+                                          
+                                        </Link>
 
                                         {/* Product Info */}
-                                        <div className={styles.productInfo}>
-                                            <h3 className={styles.productName} title={product.title}>
-                                                {product.title.length > 50
-                                                    ? `${product.title.substring(0, 50)}...`
-                                                    : product.title
-                                                }
-                                            </h3>
-                                            <p className={styles.productVolume}>{product?.product_weight}</p>
+                                        <Link href={productURL} className={styles.productInfo}>
+                                               
 
-                                            {/* Top Badges */}
-                                            <div className={styles.badgeContainer}>
-                                                {badges.map((badge, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className={
-                                                            badge.type === 'organic'
-                                                                ? styles.organicBadge
-                                                                : styles.specialBadge
-                                                        }
-                                                    >
-                                                        <img src={badge?.iconURL} alt={badge?.type} title={badge?.label}/>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            {/* Price and Add Button */}
-                                            <div className={styles.productFooter}>
-                                                <div className={styles.priceContainer}>
-                                                    <span className={styles.productPrice}>₹{product.final_price}</span>
-                                                    {product.regular_price && product.regular_price > product.final_price && (
-                                                        <span className={styles.originalPrice}>₹{product.regular_price}</span>
-                                                    )}
+                                                {/* Top Badges */}
+                                                 {badges ? ( <div className={styles.badgeContainer}>
+                                                    {badges.map((badge, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className={
+                                                                badge.type === 'organic'
+                                                                    ? styles.organicBadge
+                                                                    : styles.specialBadge
+                                                            }
+                                                        >
+                                                            <img src={badge?.iconURL} alt={badge?.type} title={badge?.label} />
+                                                        </div>
+                                                    ))}
                                                 </div>
+                                            ):(null)}
+                                               {product?.product_weight === null ? (null): <p className={styles.productVolume}>{product?.product_weight}</p> }
 
-                                                {product.quantity > 0 ? (
+                                             <h3 className={styles.productName} title={product.title}>
+                                                    {product.title.length > 50
+                                                        ? `${product.title.substring(0, 50)}...`
+                                                        : product.title
+                                                    }
+                                                </h3>
+                                                 {/* Price and Add Button */}
+                                            <div className={styles.productFooter}>
+                                              
+                                                    <div className={styles.priceContainer}>
+                                                        <span className={styles.productPrice}>₹{product.final_price}</span>
+                                                        {product.regular_price && product.regular_price > product.final_price && (
+                                                            <span className={styles.originalPrice}>₹{product.regular_price}</span>
+                                                        )}
+                                                    </div>
+                                            
+                                              
+                                            </div>
+                                        </Link>
+                                         {product.quantity > 0 ? (
                                                     cartItems[product.id] ? (
                                                         <div className={styles.quantityControls}>
                                                             <button
@@ -341,8 +314,6 @@ function ProductSlider({
                                                         OUT OF STOCK
                                                     </button>
                                                 )}
-                                            </div>
-                                        </div>
                                     </div>
                                 </SwiperSlide>
                             );
@@ -357,7 +328,7 @@ function ProductSlider({
                             </svg>
                         </div>
                     )}
-                    
+
                     {!isEnd ? (
                         <div className="swiper-button-next-custom" onClick={handleNextClick}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -365,17 +336,16 @@ function ProductSlider({
                             </svg>
                         </div>
                     ) : (
-                        <a href={categoryLink} className="see-all-link">
+                        <>
+                        {categoryLink.length > 0 ? ( <a href={categoryLink} className="see-all-link">
                             <span>See All</span>
-                            {/* <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg> */}
-                        </a>
+                        </a>) : (null)}
+                       </>
                     )}
                 </div>
             </div>
 
-              <style jsx>{`
+            <style jsx>{`
         .swiper-button-prev-custom,
         .swiper-button-next-custom,
         .see-all-link {

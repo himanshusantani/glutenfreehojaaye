@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,4 +44,7 @@ a {
 
 .freeSpace{
   height: 146px;
+}
+.swiper-slide.swiper-slide-active{
+  padding: 3px !important;
 }

@@ -9,6 +9,7 @@
   padding-top: 0;
 
 }
+
 /* Product Slider Header */
 .sliderHeader {
   display: flex;
@@ -23,7 +24,7 @@
 }
 
 .sliderTitle {
-  font-size: 1.8rem;
+  font-size: 24px;
   font-weight: 700;
   color: #222;
   margin: 0;
@@ -281,6 +282,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  height: 30px;
 }
 
 .priceContainer {
@@ -310,7 +312,7 @@
 }
 
 .addButton {
-  background: linear-gradient(135deg, #00a9bc 0%, #9CD3D9 100%);
+  background: linear-gradient(135deg, #69e9ad 0%, #0ee681 100%);
   color: white;
   border: 2px solid transparent;
   border-radius: 8px;
@@ -325,8 +327,10 @@
   align-items: center;
   gap: 6px;
   /* box-shadow: 0 4px 12px #9CD3D9; */
-  position: relative;
+  position: absolute;
   overflow: hidden;
+  right: 10px;
+  bottom: 10px;
 }
 
 .addButton::before {
@@ -336,7 +340,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, #9CD3D9, transparent);
+  background: linear-gradient(90deg, transparent, #0ee681, transparent);
   transition: left 0.5s ease;
 }
 
@@ -345,7 +349,7 @@
 }
 
 .addButton:hover {
-  background: linear-gradient(135deg, #00c4da 0%, #9cd9d9 100%);
+  background: linear-gradient(135deg, #45ed9f 0%, #05ce70 100%);
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 20px #00c4da39;
 }
@@ -362,7 +366,9 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 .quantityBtn {
@@ -375,7 +381,7 @@
   align-items: center;
   justify-content: center;
   min-width: 20px;
-   height: 30px;
+  height: 30px;
 }
 
 .quantityBtn:hover {
