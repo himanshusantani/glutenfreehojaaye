@@ -34,8 +34,12 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
       </div>
 
       <div className={styles.productPrice}>
-        <span className={styles.originalPrice}>₹{product.regular_price.toFixed(2)}</span>
-        <span className={styles.salePrice}>₹{product.final_price.toFixed(2)}</span>
+        <span className={styles.salePrice}>₹{product?.regular_price?.toFixed(2)}</span>
+
+        {product?.regular_price && product?.regular_price > product?.final_price && (
+          <span className={styles.originalPrice}>₹{product?.final_price?.toFixed(2)}</span>
+        )}
+
         {discount > 0 && (
           <div className={styles.discountBadge}>
             {discount}% OFF

@@ -271,7 +271,7 @@ function ProductSlider({
                                                     <div className={styles.priceContainer}>
                                                         <span className={styles.productPrice}>₹{product.final_price}</span>
                                                         {product.regular_price && product.regular_price > product.final_price && (
-                                                            <span className={styles.originalPrice}>₹{product.regular_price}</span>
+                                                            <span className={styles.originalPrice}>₹{product.regular_price?.toFixed(2)}</span>
                                                         )}
                                                     </div>
                                             

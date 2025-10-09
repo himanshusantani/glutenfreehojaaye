@@ -8,6 +8,7 @@ import ProductTabs from "./ProductTabs"
 import ShortDescription from "./ShortDescription"
 import { useState, useMemo } from "react"
 import ProductSlider from "../Home/ProductSlider"
+import ProductBrandingImage from "./ProductBrandingImage"
 
 
 function ProductDetailPage({ product, categoriesList, relatedProducts, crossSellProducts, upSellProducts }: any) {
@@ -107,6 +108,7 @@ function ProductDetailPage({ product, categoriesList, relatedProducts, crossSell
 
           <div className={styles.productDetailRight}>
             <ProductAttributes attributes={product?.product_attributes} />
+            <ProductBrandingImage />
           </div>
         </div>
 

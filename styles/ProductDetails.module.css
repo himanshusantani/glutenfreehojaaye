@@ -1,6 +1,5 @@
 .productDetailContainer {
   padding: 20px 48px;
-
 }
 
 /* Breadcrumb Styles */
@@ -37,6 +36,9 @@
 
 .productDetailLeft {
   width: 35%;
+  position: sticky;
+  top: 0;
+ height: 496px;
 }
 
 .productDetailCenter {
@@ -102,11 +104,12 @@
   transition: border-color 0.3s ease;
   border: 1px solid #e7e7e7;
   padding: 10px;
+      opacity: 60%;
 }
 
 .activeThumbnail {
  border: 1px solid #4caf50;
-
+    opacity: 100%;
 }
 
 .thumbnailImage {
@@ -646,6 +649,14 @@
   color: #333;
 }
 
+/* Product Branding Image */
+
+.ProductBrandingImage{
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
 
 /* Product Tabs Styles */
 .productDetailTabs {
@@ -784,4 +795,3 @@
     min-width: 120px;
   }
 }
-
