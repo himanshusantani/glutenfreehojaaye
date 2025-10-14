@@ -163,7 +163,7 @@ function ProductSlider({
                             sensitivity: 1,
                             releaseOnEdges: true,
                         }}
-                        freeMode={false}
+                        freeMode={true}
                         navigation={false} // Disable default navigation to use custom handlers
                         onSwiper={(swiper) => {
                             swiperRef.current = swiper;

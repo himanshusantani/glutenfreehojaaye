@@ -82,7 +82,7 @@
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.3) 50%, transparent 100%);
 }
-
+@media screen and (min-width:1000px) {
 .productCard:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow:
@@ -91,7 +91,7 @@
   border-color: #00c4da25;
   background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
 }
-
+}
 .badgeContainer {
 
   display: flex;
@@ -231,11 +231,11 @@
   z-index: 2;
   position: relative;
 }
-
+@media screen and (min-width:1000px) {
 .productCard:hover .productImage {
   transform: scale(1.05);
 }
-
+}
 .imageGlow {
   position: absolute;
   top: 50%;
