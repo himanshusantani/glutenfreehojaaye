@@ -4,9 +4,10 @@ import styles from "@/styles/Home.module.css";
 import HeroSlider from "@/Components/Home/HeroSlider";
 import { Client } from "./api/client";
 import ProductSlider from "@/Components/Home/ProductSlider";
+import HomeCategories from "@/Components/Home/HomeCategories";
 
 
-export default function Home({ heroSlides, allSliderProducts }: any) {
+export default function Home({ heroSlides, allSliderProducts, categoriesList }: any) {
   return (
     <>
       <Head>
@@ -17,6 +18,7 @@ export default function Home({ heroSlides, allSliderProducts }: any) {
       </Head>
       {/* <div className="freeSpace"></div> */}
       <HeroSlider slides={heroSlides} />
+      <HomeCategories categoriesList={categoriesList}/>
       <ProductSlider
         allSliderProducts={allSliderProducts}
         categoryLink="/category"
