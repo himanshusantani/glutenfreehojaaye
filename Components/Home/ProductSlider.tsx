@@ -148,7 +148,7 @@ function ProductSlider({
                     <Swiper
                         modules={[Navigation, Pagination, Mousewheel]}
                         spaceBetween={16}
-                        slidesPerView={2.7}
+                        slidesPerView={2.3}
                         simulateTouch={true}
                         allowTouchMove={true}
                         touchRatio={1}
