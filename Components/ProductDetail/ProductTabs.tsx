@@ -19,7 +19,7 @@ function ProductTabs({ description, shortDescription, reviewCount }: ProductTabs
           className={`${styles.tabHeader} ${activeTab === "description" ? styles.tabHeaderActive : ""}`}
           onClick={() => setActiveTab("description")}
         >
-          Description
+         Full Description
         </button>
         <button
           className={`${styles.tabHeader} ${activeTab === "reviews" ? styles.tabHeaderActive : ""}`}

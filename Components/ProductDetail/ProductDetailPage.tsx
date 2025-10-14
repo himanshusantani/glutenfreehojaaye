@@ -9,6 +9,7 @@ import ShortDescription from "./ShortDescription"
 import { useState, useMemo } from "react"
 import ProductSlider from "../Home/ProductSlider"
 import ProductBrandingImage from "./ProductBrandingImage"
+import OrganicPromises from "./OrganicPromises"
 
 
 function ProductDetailPage({ product, categoriesList, relatedProducts, crossSellProducts, upSellProducts }: any) {
@@ -90,6 +91,7 @@ function ProductDetailPage({ product, categoriesList, relatedProducts, crossSell
         <div className={styles.productDetailMain}>
           <div className={styles.productDetailLeft}>
             <ProductGallery thumbnail={product?.thumbnail} images={product?.images} />
+            <OrganicPromises />
           </div>
 
           <div className={styles.productDetailCenter}>
@@ -108,16 +110,20 @@ function ProductDetailPage({ product, categoriesList, relatedProducts, crossSell
 
           <div className={styles.productDetailRight}>
             <ProductAttributes attributes={product?.product_attributes} />
-            <ProductBrandingImage />
+         
           </div>
         </div>
-
-        <div className={styles.productDetailTabs}>
-          <ProductTabs
-            description={product.description}
-            shortDescription={product.short_description}
-            reviewCount={product.review_count}
-          />
+        <div className={styles.productDetailLayout}>
+          <div className={styles.productDetailTabs}>
+            <ProductTabs
+              description={product.description}
+              shortDescription={product.short_description}
+              reviewCount={product.review_count}
+            />
+          </div>
+           <div className={styles.productDetailImageContainer}>
+               <ProductBrandingImage />
+           </div>
         </div>
       </div>
       <ProductSlider
@@ -129,13 +135,13 @@ function ProductDetailPage({ product, categoriesList, relatedProducts, crossSell
       <ProductSlider
         allSliderProducts={crossSellProducts}
         categoryLink=""
-        sliderTitle="Cross Sell Products "
+        sliderTitle="You May Also Like "
         sliderSubTitle=""
       />
       <ProductSlider
         allSliderProducts={upSellProducts}
         categoryLink=""
-        sliderTitle="Up Sell Products "
+        sliderTitle="Exclusive Picks "
         sliderSubTitle=""
       />
 

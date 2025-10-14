@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   env: {
+   siteName : 'Organic Farms',
    baseURL: 'http://34.100.205.229:8055',  
   },
 

@@ -55,7 +55,7 @@ function ProductSlider({
 
         // Add badges based on product attributes (limit to 3-4 most important ones)
         let badgeCount = 0;
-        const maxBadges = 5;
+        const maxBadges = 4;
 
         // Priority order for displaying badges
         const priorityOrder = [
@@ -148,7 +148,7 @@ function ProductSlider({
                     <Swiper
                         modules={[Navigation, Pagination, Mousewheel]}
                         spaceBetween={16}
-                        slidesPerView={1.2}
+                        slidesPerView={2.7}
                         simulateTouch={true}
                         allowTouchMove={true}
                         touchRatio={1}
@@ -172,14 +172,14 @@ function ProductSlider({
                         }}
                         onSlideChange={handleSlideChange}
                         breakpoints={{
-                            640: {
-                                slidesPerView: 2.5,
-                            },
+                            // 640: {
+                            //     slidesPerView: 3,
+                            // },
                             768: {
-                                slidesPerView: 3.5,
+                                slidesPerView: 4.5,
                             },
                             1024: {
-                                slidesPerView: 4.5,
+                                slidesPerView: 5,
                             },
                             1280: {
                                 slidesPerView: 5.5,
@@ -406,10 +406,14 @@ function ProductSlider({
         }
 
         @media (max-width: 1024px) {
-          .swiper-button-prev-custom,
+          .swiper-button-prev-custom{
+        //    left: 0px;
+          display: none;  
+        }
           .swiper-button-next-custom,
           .see-all-link {
-            display: none;
+            // right: 0px;
+              display: none;
           }
         }
       `}</style>

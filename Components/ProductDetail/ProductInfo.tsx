@@ -28,16 +28,23 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
 
       <h1 className={styles.productTitle}>Haagen Caramel Cone Ice Cream Boxed</h1>
 
-      <div className={styles.productRating}>
+      {/* <div className={styles.productRating}>
         <div className={styles.stars}>{renderStars(product.rating)}</div>
         <span className={styles.reviewCount}>({product.review_count || 0})</span>
+      </div> */}
+
+      <div className={styles.stockInfo}>
+        {product?.product_weight === null ? (null) : (<><p className={styles.productVolume}>{product?.product_weight}</p> <p className={styles.productVolume}>|</p></>)}
+        <span className={styles.stockCount}>{product.stock} In stock</span>
+        {/* {product?.quantity <= 10 && product?.quantity > 0 && ( <div className={styles.stockBadge}>Only {product?.quantity} left!</div>
+        )} */}
       </div>
 
       <div className={styles.productPrice}>
-        <span className={styles.salePrice}>₹{product?.regular_price?.toFixed(2)}</span>
+        <span className={styles.salePrice}>₹{product?.final_price?.toFixed(2)}</span>
 
         {product?.regular_price && product?.regular_price > product?.final_price && (
-          <span className={styles.originalPrice}>₹{product?.final_price?.toFixed(2)}</span>
+          <span className={styles.originalPrice}>₹{product?.regular_price?.toFixed(2)}</span>
         )}
 
         {discount > 0 && (
@@ -47,9 +54,7 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
         )}
       </div>
 
-      <div className={styles.stockInfo}>
-        <span className={styles.stockCount}>{product.stock} In stock</span>
-      </div>
+
 
       <div className={styles.productActions}>
         {product.quantity > 0 ? (

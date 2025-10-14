@@ -4,15 +4,15 @@ interface ProductAttributesProps {
   attributes: string[];
 }
 
-
-
 function ProductAttributes({ attributes }: ProductAttributesProps) {
- const safeAttributes =
+  const safeAttributes =
     !attributes || attributes.length === 0 ? ["all_natural"] : attributes;
-
-
   return (
-    <div className={styles.productAttributes}>
+    <div
+      className={styles.productAttributes}
+      style={safeAttributes?.length > 17 ? {} : { overflowY: "unset" }}
+    >
+
       <h3 className={styles.attributesTitle}>Highlights</h3>
 
       <div className={styles.attributesList}>
@@ -23,7 +23,7 @@ function ProductAttributes({ attributes }: ProductAttributesProps) {
 
           return (
             <div key={key} className={styles.attributeItem}>
-              <div className={styles.attributeIcon}><img src={attribute?.iconURL} alt={attribute?.type} title={attribute?.label}/></div>
+              <div className={styles.attributeIcon}><img src={attribute?.iconURL} alt={attribute?.type} title={attribute?.label} /></div>
               <div className={styles.attributeContent}>
                 <span className={styles.attributeLabel}>{attribute.label}</span>
               </div>
