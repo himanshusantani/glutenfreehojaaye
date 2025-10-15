@@ -64,8 +64,16 @@
 }
 
 .categoriesHeader {
-  text-align: center;
-  margin-bottom: 40px;
+display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding: 0 48px;
+    flex-direction: column;
+  @media (max-width: 1000px) {
+     padding: 0 15px;
+       margin-bottom: 15px;
+  }
 }
 
 .categoriesHeader h2 {
@@ -94,7 +102,7 @@
     padding: 0 15px;
   }
   @media screen and (max-width:768px) {
-            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
         gap: 5px;
         padding: 0 15px;
   }
@@ -108,6 +116,9 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  @media screen and (max-width: 1000px) {
+    border-radius: 5px;
+  }
 }
 
 .categoryCard:hover {
@@ -119,12 +130,12 @@
 .categoryImageWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 2 / 2.3;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 16px;
+ 
 }
 
 .categoryImage {
@@ -160,6 +171,9 @@
     height: 40%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
     padding-bottom: 10px;
+    @media screen and (max-width:1000px) {
+      padding-bottom: 5px;
+    }
   }
 
 
@@ -176,21 +190,17 @@
   width: 100%;
   height: 100%;
   background: #e5e7eb;
-  border-radius: 16px;
 }
 
 /* ========================= Mobile Responsive ========================= */
 @media (max-width: 1000px) {
-  .categoriesSection {
-    padding: 30px 0;
-  }
-
+ 
   .categoriesHeader h2 {
     font-size: 20px;
   }
 
   .overlayText {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 400;
   }
 
