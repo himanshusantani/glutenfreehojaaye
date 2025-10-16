@@ -74,6 +74,30 @@ export class Client {
         }
     };
 
+        async fetchHomeSection2 () {
+        try {
+            const response: any = await fetch(`${process.env.baseURL}/items/cms_block?filter[url_key][_eq]=home-section-2`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // If authentication is required, include the token
+                    // 'Authorization': `Bearer ${process.env.MAGENTO_ACCESS_TOKEN}`
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                const errorText = await response.text();
+                throw new Error(`Error: ${response.status} - ${errorText}`);
+            }
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            return "Error";
+        }
+    };
+
     async fetchProductBySlug(slug: string) {
         try {
             const res = await fetch(`${process.env.baseURL}/items/products?filter[slug][_eq]=${slug}&fields=*,related_products.*,images.*,cross_sell_products.*,up_sell_products.*,product_review.*,variants.*`, {

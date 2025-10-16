@@ -5,6 +5,9 @@
   height: 80vh;
   position: relative;
   margin-bottom: 50px;
+   @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+   }
 }
 
 .heroSwiper {
@@ -57,10 +60,44 @@
   background: #e56740;
 }
 
+/* ===================================Home Section 2======================================= */
+
+.Section2Container{
+  width: 100% ;
+  display: flex;
+  margin-bottom: 50px;
+  padding: 0 48px;
+  gap: 15px;
+  @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+    padding: 0px 15px;
+    gap: 5px;
+            flex-wrap: wrap;
+  }
+}
+.Section2Wrapper{
+  width: 100%;
+   @media screen and (max-width:1000px){
+    width: calc(50% - 5px);
+   }
+  
+}
+.Section2Wrapper img{
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 100%;
+   @media screen and (max-width:1000px){
+     border-radius: 5px;
+   }
+}
 /* ======================================Home Categories List=================================== */
 
 .categoriesSection {
   margin-bottom: 50px;
+   @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+   }
 }
 
 .categoriesHeader {
@@ -73,6 +110,7 @@ display: flex;
   @media (max-width: 1000px) {
      padding: 0 15px;
        margin-bottom: 15px;
+
   }
 }
 
