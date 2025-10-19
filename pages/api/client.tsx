@@ -52,7 +52,7 @@ export class Client {
 
     async fetchHomePageProducts() {
         try {
-            const response: any = await fetch(`${process.env.baseURL}/items/products`, {
+            const response: any = await fetch(`${process.env.baseURL}/items/products?fields=*,category.*`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

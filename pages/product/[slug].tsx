@@ -1,5 +1,6 @@
 import ProductDetailPage from "@/Components/ProductDetail/ProductDetailPage";
 import { Client } from "../../pages/api/client";
+import Head from "next/head";
 
 const client = new Client();
 
@@ -7,8 +8,15 @@ export default function ProductPage({ product, categoriesList, relatedProducts, 
   if (!product) {
     return <p>Product not found.</p>;
   }
-  console.log(product, 'product')
+
   return (
+    <>
+     <Head>
+        <title>{product?.title}</title>
+        <meta name="description" content="Some healthy option" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
     <ProductDetailPage
       product={product}
       categoriesList={categoriesList}
@@ -16,6 +24,7 @@ export default function ProductPage({ product, categoriesList, relatedProducts, 
       crossSellProducts={crossSellProducts} 
       upSellProducts={upSellProducts}
     />
+    </>
   );
 }
 

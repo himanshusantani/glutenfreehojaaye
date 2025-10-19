@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules"; // Removed Navigation
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 import styles from "@/styles/Home.module.css";
 import { Client } from "@/pages/api/client";
@@ -18,28 +17,13 @@ type Slide = {
     };
 };
 
-function HeroSlider({slides}:any) {
-    //  const [slides, setSlides] = useState<Slide[]>([]);
-
-//     const client = new Client();
-//   useEffect(() => {
-//     async function fetchData() {
-//       const data = await client.fetchHeroSliderSection();
-//       if (data?.data) {
-//         setSlides(data.data);
-//       }
-//     }
-//     fetchData();
-//   }, []);
-
-
+function HeroSlider({ slides }: any) {
     return (
         <div className={styles.heroWrapper}>
             <Swiper
-                modules={[Navigation, Pagination, Autoplay]}
-                navigation
+                modules={[Pagination, Autoplay]} // Removed Navigation module
                 pagination={{ clickable: true }}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                autoplay={{ delay: 6000, disableOnInteraction: false }}
                 loop={true}
                 className={styles.heroSwiper}
             >
@@ -62,11 +46,8 @@ function HeroSlider({slides}:any) {
                             <div
                                 className={styles.slide}
                                 style={{
-                                      backgroundImage: `url(${process.env.baseURL}${imageBlock?.data?.file?.url})`, 
-                            //   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0.19)), url('http://34.100.205.229:8055/assets/4e991dce-5112-4b23-9a9b-e5c7a3786654')`,
-                                    
+                                    backgroundImage: `url(${process.env.baseURL}${imageBlock?.data?.file?.url})`,
                                 }}
-
                             >
                                 <div className={styles.overlay}>
                                     {headerBlock && <h1>{headerBlock.data.text}</h1>}

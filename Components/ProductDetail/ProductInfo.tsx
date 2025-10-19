@@ -26,7 +26,7 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
   return (
     <div className={styles.productInfo}>
 
-      <h1 className={styles.productTitle}>Haagen Caramel Cone Ice Cream Boxed</h1>
+      <h1 className={styles.productTitle}>{product?.title}</h1>
 
       {/* <div className={styles.productRating}>
         <div className={styles.stars}>{renderStars(product.rating)}</div>
