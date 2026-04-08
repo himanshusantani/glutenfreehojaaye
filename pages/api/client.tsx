@@ -3,7 +3,7 @@ export class Client {
 
     async fetchCategories() {
         try {
-            const response = await fetch(`${process.env.baseURL}/items/categories`, {
+            const response = await fetch(`${process.env.baseURL}/items/categories?fields=*,products.*`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -15,6 +15,7 @@ export class Client {
             if (response.ok) {
                 const data = await response.json();
                 return data;
+
             } else {
                 const errorText = await response.text();
                 throw new Error(`Error: ${response.status} - ${errorText}`);

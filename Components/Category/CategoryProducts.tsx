@@ -2,12 +2,13 @@ import Link from "next/link"
 import styles from "../../styles/Categories.module.css"
 import { useState } from "react";
 import attributeMap from "../AttributeIcons/AttributeIcons";
-
-function CategoryProducts({ Products }: any) {
+import CategoryHeader from "./CategoryHeader";
+import { useCart } from "@/context/CartContext";
+function CategoryProducts({ Products, currentCategory }: any) {
+  
       const [wishlist, setWishlist] = useState<string[]>([]);
-        const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
-    
-         // Helper function to calculate discount percentage
+const { cartItems, updateCart } = useCart();
+      // Helper function to calculate discount percentage
     const getDiscountPercentage = (regular: number, final: number) => {
         if (!regular || regular <= final) return 0;
         return Math.round(((regular - final) / regular) * 100);
@@ -67,17 +68,14 @@ function CategoryProducts({ Products }: any) {
         );
     };
 
-    const updateCart = (productId: string, change: number) => {
-        setCartItems(prev => ({
-            ...prev,
-            [productId]: Math.max(0, (prev[productId] || 0) + change)
-        }));
-    };
+
         
     return (
-        <>
+        <div>
+        <CategoryHeader currentCategory={currentCategory} />
         <div className={styles.categoryProductsWrapper}>
-            {Products.map((product:any ) =>{
+            
+            {Products?.map((product:any ) =>{
                   const discount = getDiscountPercentage(product.regular_price || 0, product.final_price);
                             const badges = getProductBadges(product);
                             const productURL = `/product/${product?.slug}`
@@ -165,47 +163,51 @@ function CategoryProducts({ Products }: any) {
 
                     </div>
                 </Link>
-                {product.quantity > 0 ? (
-                    cartItems[product.id] ? (
-                        <div className={styles.quantityControls}>
-                            <button
-                                className={styles.quantityBtn}
-                                onClick={() => updateCart(product.id, -1)}
-                            >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                            </button>
-                            <span className={styles.quantity}>{cartItems[product.id]}</span>
-                            <button
-                                className={styles.quantityBtn}
-                                onClick={() => updateCart(product.id, 1)}
-                                disabled={cartItems[product.id] >= product.quantity}
-                            >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <line x1="12" y1="5" x2="12" y2="19" />
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                            </button>
-                        </div>
-                    ) : (
-                        <button
-                            className={styles.addButton}
-                            onClick={() => updateCart(product.id, 1)}
-                        >
-                            ADD
-                        </button>
-                    )
-                ) : (
-                    <button className={styles.outOfStockButton} disabled>
-                        OUT OF STOCK
-                    </button>
-                )}
+              {product.quantity > 0 ? (
+  cartItems[product.id]?.quantity ? (
+    <div className={styles.quantityControls}>
+      <button
+        className={styles.quantityBtn}
+        onClick={() => updateCart(product, -1)}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      </button>
+
+      <span className={styles.quantity}>
+        {cartItems[product.id]?.quantity}
+      </span>
+
+      <button
+        className={styles.quantityBtn}
+        onClick={() => updateCart(product, 1)}
+        disabled={cartItems[product.id]?.quantity >= product.quantity}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <button
+      className={styles.addButton}
+      onClick={() => updateCart(product, 1)}
+    >
+      ADD
+    </button>
+  )
+) : (
+  <button className={styles.outOfStockButton} disabled>
+    OUT OF STOCK
+  </button>
+)}
             </div>
                )
             })}
         </div>
-        </>
+        </div>
     )
 }
 export default CategoryProducts

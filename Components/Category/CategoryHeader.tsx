@@ -1,15 +1,15 @@
 import styles from "../../styles/Categories.module.css"
 
-function CategoryHeader(){
+function CategoryHeader({currentCategory}:any){
  return(
     <>
      {/* Header */}
                 <div className={styles.categoryHeader}>
                     <div className={styles.headerContent}>
                         <h3 className={styles.categoryTitle}>
-                            Cakes
+                           {currentCategory.category_name ? currentCategory.category_name : '' }
                         </h3>
-                         <p className={styles.categorySubtitle}>Healthy and Gluten Free Cake</p>
+                         <p className={styles.categorySubtitle}>{currentCategory.short_description ? currentCategory.short_description : 'fffff' }</p>
                     </div>
                 </div>
     </>

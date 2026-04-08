@@ -10,19 +10,14 @@ import { useState, useMemo } from "react"
 import ProductSlider from "../Home/ProductSlider"
 import ProductBrandingImage from "./ProductBrandingImage"
 import OrganicPromises from "./OrganicPromises"
+import { useCart } from "@/context/CartContext"
 
 
 function ProductDetailPage({ product, categoriesList, relatedProducts, crossSellProducts, upSellProducts }: any) {
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
+  const { cartItems, updateCart } = useCart();
 
-  // Add To Cart Functionality
-  const updateCart = (productId: string, change: number) => {
-    setCartItems(prev => ({
-      ...prev,
-      [productId]: Math.max(0, (prev[productId] || 0) + change)
-    }));
-  };
+ 
 
   // Wishlist Functionality 
 

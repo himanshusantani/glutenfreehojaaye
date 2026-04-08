@@ -4,7 +4,40 @@ import SideCategories from "./SideCategories"
 import styles from "../../styles/Categories.module.css"
 import CategoryProducts from "./CategoryProducts"
 
-function CategoryPage({ allSliderProducts, categoriesList }: any) {
+function CategoryPage({ Products, categoriesList, slug }: any) {
+
+const categories = categoriesList?.data || [];
+
+
+
+    // Find current category
+    const currentCategory = categories.find((cat: any) => cat.slug === slug);
+
+    // Function to build breadcrumb path
+    const buildBreadcrumb = (category: any, allCategories: any[]) => {
+        const path = [];
+
+        let current = category;
+
+        while (current) {
+            path.unshift({
+                label: current.title || current.category_name,
+                href: `/${current.slug}`
+            });
+
+            current = allCategories.find(
+                (cat: any) => cat.id === current.parent_category
+            );
+        }
+
+        return path;
+    };
+
+    const dynamicBreadcrumb = [
+        { label: "Home", href: "/" },
+        ...(currentCategory ? buildBreadcrumb(currentCategory, categories) : [])
+    ];
+
     const breadCrumb = [
         {
             "label": "Home",
@@ -27,11 +60,11 @@ function CategoryPage({ allSliderProducts, categoriesList }: any) {
     return (
         <>
             <div className={styles.categoryMainContainer}>
-                <CategoryBreadcrumbs items={breadCrumb} />
-                <CategoryHeader />
+                <CategoryBreadcrumbs items={dynamicBreadcrumb} />
+                
                 <div className={styles.categoryWrapper}>
-                    <SideCategories categoriesList={categoriesList} />
-                    <CategoryProducts Products={allSliderProducts} />
+                    <SideCategories categoriesList={categoriesList} currentCategory={currentCategory}/>
+                    <CategoryProducts Products={Products} categoriesList={categoriesList} currentCategory={currentCategory} />
                 </div>
             </div>
         </>

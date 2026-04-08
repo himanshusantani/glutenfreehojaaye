@@ -1,58 +1,76 @@
 import Head from "next/head";
 import { Client } from "../api/client";
-import CategoryBreadcrumbs from "@/Components/Category/CategoryBreadcrumbs";
-import CategoryHeader from "@/Components/Category/CategoryHeader";
 import CategoryPage from "@/Components/Category/CategoryPage";
-import { useEffect, useState } from "react";
 
-function Slug1({
-    //  allSliderProducts,
-      categoriesList }: any) {
-        const [allSliderProducts, setAllSliderProducts] = useState<any[]>([]);
-  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const client = new Client();
-        const sliderProduct = await client.fetchHomePageProducts();
-        setAllSliderProducts(sliderProduct?.data || []);
-        
-        // Example: If you also need categories, uncomment and adjust:
-        // const categories = await client.fetchCategories();
-        // setCategoriesList(categories?.data || []);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-    return (
-        <>
-            <Head>
-                <title>Category Title</title>
-                <meta name="description" content="Some healthy option" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-         <CategoryPage allSliderProducts={allSliderProducts} categoriesList={categoriesList}/>
-
-        </>
-    )
+function Slug1({ categoriesList, Products, slug }: any) {
+  return (
+    <>
+      <Head>
+        <title>Category Title</title>
+        <meta name="description" content="Some healthy option" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <CategoryPage Products={Products} categoriesList={categoriesList} slug={slug} />
+    </>
+  )
 }
 export default Slug1
 
-// export async function getStaticProps() {
-//     const client = new Client();
+export async function getStaticPaths() {
+  const client = new Client();
+  const categoriesRes = await client.fetchCategories();
 
-//     const sliderProduct = await client.fetchHomePageProducts();
+  const categories = categoriesRes?.data || [];
 
-//     return {
-//         props: {
-//             allSliderProducts: sliderProduct?.data || [],
-//         },
-//         revalidate: 60, 
-//     };
-// }
+  const paths = categories
+    .filter((cat: any) => cat.parent_category === null)
+    .map((cat: any) => ({
+      params: { slug: cat.slug },
+    }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }: any) {
+  const client = new Client();
+
+  const categoriesRes = await client.fetchCategories();
+  const productsRes = await client.fetchHomePageProducts();
+
+  const categories = categoriesRes?.data || [];
+  const allProducts = productsRes?.data || [];
+
+  const slug = params.slug;
+
+  // 1. Find category by slug
+  const selectedCategory = categories.find(
+    (cat: any) => cat.slug === slug && cat.parent_category === null
+  );
+
+  let filteredProducts: any[] = [];
+
+  if (selectedCategory) {
+    // 2. Get product IDs from category
+    const productIds = selectedCategory.products.map(
+      (p: any) => p.products_id
+    );
+
+    // 3. Match with allProducts
+    filteredProducts = allProducts.filter((product: any) =>
+      productIds.includes(product.id)
+    );
+  }
+
+  return {
+    props: {
+      Products: filteredProducts,
+      categoriesList: categoriesRes,
+      slug: params.slug,
+    },
+    revalidate: 60,
+  };
+}

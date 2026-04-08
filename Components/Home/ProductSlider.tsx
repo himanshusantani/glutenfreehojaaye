@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 import styles from "../../styles/ProductsSlider.module.css";
 import attributeMap from "../../Components/AttributeIcons/AttributeIcons"
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 interface Product {
     id: string;
     title: string;
@@ -28,14 +29,14 @@ function ProductSlider({
     sliderTitle,
     sliderSubTitle }: any) {
     const [wishlist, setWishlist] = useState<string[]>([]);
-    const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
-
+    const { cartItems, updateCart } = useCart();
     // States for navigation button visibility
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
 
     const swiperRef = useRef<any>(null);
 
+    
     // Helper function to calculate discount percentage
     const getDiscountPercentage = (regular: number, final: number) => {
         if (!regular || regular <= final) return 0;
@@ -96,12 +97,7 @@ function ProductSlider({
         );
     };
 
-    const updateCart = (productId: string, change: number) => {
-        setCartItems(prev => ({
-            ...prev,
-            [productId]: Math.max(0, (prev[productId] || 0) + change)
-        }));
-    };
+ 
 
     // Handle swiper events
     const handleSlideChange = (swiper: any) => {
@@ -194,6 +190,7 @@ function ProductSlider({
                             const discount = getDiscountPercentage(product.regular_price || 0, product.final_price);
                             const badges = getProductBadges(product);
                             const productURL = `/product/${product?.slug}`
+                            const quantity = cartItems[product.id]?.quantity || 0;
                             return (
                                 <SwiperSlide key={product?.id}>
 
@@ -279,21 +276,21 @@ function ProductSlider({
                                             </div>
                                         </Link>
                                          {product.quantity > 0 ? (
-                                                    cartItems[product.id] ? (
+                                                  quantity > 0 ? (
                                                         <div className={styles.quantityControls}>
                                                             <button
                                                                 className={styles.quantityBtn}
-                                                                onClick={() => updateCart(product.id, -1)}
+                                                                onClick={() => updateCart(product, -1)}
                                                             >
                                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                                                     <line x1="5" y1="12" x2="19" y2="12" />
                                                                 </svg>
                                                             </button>
-                                                            <span className={styles.quantity}>{cartItems[product.id]}</span>
+                                                            <span className={styles.quantity}> {quantity}</span>
                                                             <button
                                                                 className={styles.quantityBtn}
-                                                                onClick={() => updateCart(product.id, 1)}
-                                                                disabled={cartItems[product.id] >= product.quantity}
+                                                               onClick={() => updateCart(product, 1)}
+                                                              disabled={quantity >= product.quantity}
                                                             >
                                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                                                     <line x1="12" y1="5" x2="12" y2="19" />
@@ -304,7 +301,7 @@ function ProductSlider({
                                                     ) : (
                                                         <button
                                                             className={styles.addButton}
-                                                            onClick={() => updateCart(product.id, 1)}
+                                                            onClick={() => updateCart(product, 1)}
                                                         >
                                                             ADD
                                                         </button>

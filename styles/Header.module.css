@@ -443,6 +443,10 @@
   color: #646464;
 }
 
+.cartBadge {
+
+}
+
 /* Mobile responsive styles */
 @media (max-width: 768px) {
   .topHeader {

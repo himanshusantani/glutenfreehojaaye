@@ -10,6 +10,8 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
 
   const discount = getDiscountPercentage(product.regular_price || 0, product.final_price);
 
+const quantity = cartItems[product.id]?.quantity || 0;
+
   // Reviews 
   const renderStars = (rating: number) => {
     const stars = []
@@ -57,33 +59,30 @@ function ProductInfo({ product, cartItems, updateCart, toggleWishlist, wishlist 
 
 
       <div className={styles.productActions}>
-        {product.quantity > 0 ? (
-          cartItems[product.id] ? (
+      {product.quantity > 0 ? (
+          quantity > 0 ? (
             <div className={styles.quantityControls}>
               <button
                 className={styles.quantityBtn}
-                onClick={() => updateCart(product.id, -1)}
+                onClick={() => updateCart(product, -1)}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
+                -
               </button>
-              <span className={styles.quantity}>{cartItems[product.id]}</span>
+
+              <span className={styles.quantity}>{quantity}</span>
+
               <button
                 className={styles.quantityBtn}
-                onClick={() => updateCart(product.id, 1)}
-                disabled={cartItems[product.id] >= product.quantity}
+                onClick={() => updateCart(product, 1)}
+                disabled={quantity >= product.quantity}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
+                +
               </button>
             </div>
           ) : (
             <button
               className={styles.addButton}
-              onClick={() => updateCart(product.id, 1)}
+              onClick={() => updateCart(product, 1)}
             >
               ADD
             </button>
