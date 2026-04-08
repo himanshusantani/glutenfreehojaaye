@@ -3,13 +3,33 @@
 import { useEffect, useState } from "react"
 import style from "../../styles/Header.module.css"
 import Link from "next/link"
+import MiniCart from "../MiniCart/MiniCart"
+import { useCart } from "@/context/CartContext"
 
 const placeholders = ['Search "rice"', 'Search "Milk"', 'Search "Bread"']
 
 function Header({ categoriesList }: any) {
+     const { cartItems } = useCart();
     const [index, setIndex] = useState(0)
     const [animating, setAnimating] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+
+     const items = Object.values(cartItems);
+
+  const itemsTotal = items.reduce(
+    (sum: number, item: any) => sum + item.final_price * item.quantity,
+    0
+  );
+
+  const handlingCharge = items.length > 0 ? 2 : 0;
+  const grandTotal = itemsTotal + handlingCharge;
+   
+    const totalItems = Object.values(cartItems).reduce(
+        (sum: number, item: any) => sum + item.quantity,
+        0
+    );
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -44,9 +64,10 @@ function Header({ categoriesList }: any) {
                 {/* Top Header */}
                 <div className={style.topHeader}>
                     <div className={style.logoSection}>
-                        <span className={style.logoBold}>Organic</span>
-                        <span className={style.logoScript}>Farms</span>
-
+                        <Link href='/'>
+                            <span className={style.logoBold}>Organic</span>
+                            <span className={style.logoScript}>Farms</span>
+                        </Link>
                         {/* Location Selector - Hidden on mobile */}
                         <div className={style.locationSection}>
                             <div className={style.locationSelect}>
@@ -97,7 +118,7 @@ function Header({ categoriesList }: any) {
                                     <path d="M4 21c0-4 4-7 8-7s8 3 8 7" stroke="#646464" fill="none" />
                                 </svg>
                             </span>
-                            <span className={style.icon}>
+                            <span className={style.icon} onClick={() => setIsCartOpen(true)} style={{display:'flex', gap:'5px'}}>
                                 <svg
                                     version="1.1"
                                     id="Layer_1"
@@ -153,6 +174,12 @@ function Header({ categoriesList }: any) {
                                         </g>
                                     </g>
                                 </svg>
+                                {totalItems > 0 && (
+                                    <span className={style.cartBadge}>
+                                      <p>{totalItems} Items</p> 
+                                      <p>₹{grandTotal.toLocaleString("en-IN")}</p>
+                                    </span>
+                                )}
                             </span>
                         </div>
 
@@ -285,7 +312,11 @@ function Header({ categoriesList }: any) {
                                 </svg>
                                 <span>Profile</span>
                             </div>
-                            <div className={style.mobileIconItem}>
+                            <div className={style.mobileIconItem}
+                                onClick={() => {
+                                    setIsCartOpen(true);
+                                    closeMobileMenu();
+                                }}>
                                 <svg
                                     version="1.1"
                                     id="Layer_1"
@@ -347,6 +378,7 @@ function Header({ categoriesList }: any) {
                     </div>
                 </div>
             </div>
+            <MiniCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </>
     )
 }

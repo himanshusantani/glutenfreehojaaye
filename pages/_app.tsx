@@ -3,14 +3,17 @@ import Header from "@/Components/Header/Header";
 import { NextPageContext } from "next";
 import "@/styles/globals.css";
 import { Client } from "./api/client";
+import { CartProvider } from "@/context/CartContext";
 
 let cachedData: any = null; 
 function App({ Component, pageProps, categoriesList }: any) {
   return (
     <>
+      <CartProvider>
     <Header categoriesList={categoriesList} />
-      <Component {...pageProps} />
+      <Component categoriesList={categoriesList} {...pageProps} />
     <Footer />
+    </CartProvider>
     </>
   )
 }

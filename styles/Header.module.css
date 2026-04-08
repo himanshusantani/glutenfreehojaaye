@@ -28,6 +28,7 @@
   font-weight: 700;
   font-family: "Poppins", sans-serif;
   letter-spacing: -2px;
+  color: #2a2a2a;
 }
 
 .logoScript {
@@ -36,6 +37,7 @@
   font-size: 1.5rem;
   margin-left: 4px;
   transform: translateY(4px);
+  color: #2a2a2a;
 }
 
 /* Navigation Menu Links */
@@ -439,6 +441,10 @@
 .mobileIconItem span {
   font-size: 12px;
   color: #646464;
+}
+
+.cartBadge {
+
 }
 
 /* Mobile responsive styles */

@@ -5,6 +5,9 @@
   height: 80vh;
   position: relative;
   margin-bottom: 50px;
+   @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+   }
 }
 
 .heroSwiper {
@@ -24,7 +27,7 @@
 }
 
 .overlay {
-  margin-left: 40px;
+  margin-left: 18px;
   padding: 30px;
   border-radius: 12px;
   text-align: start;
@@ -55,4 +58,196 @@
 
 .ctaBtn:hover {
   background: #e56740;
+}
+
+/* ===================================Home Section 2======================================= */
+
+.Section2Container{
+  width: 100% ;
+  display: flex;
+  margin-bottom: 50px;
+  padding: 0 48px;
+  gap: 15px;
+  @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+    padding: 0px 15px;
+    gap: 5px;
+            flex-wrap: wrap;
+  }
+}
+.Section2Wrapper{
+  width: 100%;
+   @media screen and (max-width:1000px){
+    width: calc(50% - 5px);
+   }
+  
+}
+.Section2Wrapper img{
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 100%;
+   @media screen and (max-width:1000px){
+     border-radius: 5px;
+   }
+}
+/* ======================================Home Categories List=================================== */
+
+.categoriesSection {
+  margin-bottom: 50px;
+   @media screen and (max-width:1000px){
+    margin-bottom: 15px;
+   }
+}
+
+.categoriesHeader {
+display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding: 0 48px;
+    flex-direction: column;
+  @media (max-width: 1000px) {
+     padding: 0 15px;
+       margin-bottom: 15px;
+
+  }
+}
+
+.categoriesHeader h2 {
+  font-size: 2rem;
+  color: #1b1f2a;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.categoriesHeader p {
+  color: #5f6b7a;
+  font-size: 1rem;
+}
+
+/* ========================= Grid Layout ========================= */
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 0 48px;
+  margin: 0 auto;
+  @media screen and (max-width:1000px) {
+     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 0 15px;
+  }
+  @media screen and (max-width:768px) {
+            grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+        gap: 5px;
+        padding: 0 15px;
+  }
+}
+
+.categoryCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  @media screen and (max-width: 1000px) {
+    border-radius: 5px;
+  }
+}
+
+.categoryCard:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ========================= Image + Overlay ========================= */
+.categoryImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 2.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+ 
+}
+
+.categoryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.categoryCard:hover .categoryImage {
+  transform: scale(1.08);
+}
+
+/* Overlay for desktop */
+.categoryOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+  .categoryOverlay {
+    opacity: 1; 
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    padding-bottom: 10px;
+    @media screen and (max-width:1000px) {
+      padding-bottom: 5px;
+    }
+  }
+
+
+.overlayText {
+  color: #fff;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+/* Placeholder */
+.placeholderImage {
+  width: 100%;
+  height: 100%;
+  background: #e5e7eb;
+}
+
+/* ========================= Mobile Responsive ========================= */
+@media (max-width: 1000px) {
+ 
+  .categoriesHeader h2 {
+    font-size: 20px;
+  }
+
+  .overlayText {
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .categoryCard:hover {
+    transform: none; /* disable hover animation on mobile */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .categoryCard:hover .categoryImage {
+    transform: none;
+  }
 }

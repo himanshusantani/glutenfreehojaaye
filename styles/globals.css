@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,8 +15,11 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background: #fff;
 }
-
+#__next{
+  background: #fff;
+}
 body {
   color: var(--foreground);
   background: var(--background);
@@ -43,4 +47,31 @@ a {
 
 .freeSpace{
   height: 146px;
+}
+
+/* For Product Slider  */
+@media screen and (max-width:1000px) {
+.swiper-slide.swiper-slide-active,
+  .swiper-slide.swiper-slide-next{
+  margin-right: 5px !important;
+}  
+}
+
+/* For Product Page Image Gallary Slider  */
+.swiper-slide.swiper-slide-active{
+  padding: 1px !important;
+}
+.mainSwiper.swiper-pagination-bullets {
+  position: relative !important;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.mainSwiper.swiper-pagination-bullet {
+  background: #888;
+  opacity: 1;
+  
+}
+.swiper-pagination-bullet-active{
+    background: #4caf50 !important;
 }

@@ -1,0 +1,30 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - dev  # Trigger on push to dev branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@34.100.205.229 << 'EOF'
+            cd /opt/next/glutenfreehojaaye/
+            git reset --hard
+            git pull origin dev
+            npm install
+            npm run build
+            pm2 restart all
+          EOF

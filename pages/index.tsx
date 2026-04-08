@@ -4,9 +4,11 @@ import styles from "@/styles/Home.module.css";
 import HeroSlider from "@/Components/Home/HeroSlider";
 import { Client } from "./api/client";
 import ProductSlider from "@/Components/Home/ProductSlider";
+import HomeCategories from "@/Components/Home/HomeCategories";
+import Section2 from "@/Components/Home/Section2";
 
 
-export default function Home({ heroSlides, allSliderProducts }: any) {
+export default function Home({ heroSlides, allSliderProducts, categoriesList, section2 }: any) {
   return (
     <>
       <Head>
@@ -17,6 +19,8 @@ export default function Home({ heroSlides, allSliderProducts }: any) {
       </Head>
       {/* <div className="freeSpace"></div> */}
       <HeroSlider slides={heroSlides} />
+      <Section2 section2={section2}/>
+      <HomeCategories categoriesList={categoriesList}/>
       <ProductSlider
         allSliderProducts={allSliderProducts}
         categoryLink="/category"
@@ -47,11 +51,13 @@ export async function getStaticProps() {
   const client = new Client();
   const HeroSliderData = await client.fetchHeroSliderSection();
   const sliderProduct = await client.fetchHomePageProducts();
+  const section2 = await client.fetchHomeSection2();
 
   return {
     props: {
       heroSlides: HeroSliderData?.data || [],
       allSliderProducts: sliderProduct?.data || [],
+      section2: section2?.data || []
     },
     revalidate: 60, // ISR: regenerate every 60s
   };
